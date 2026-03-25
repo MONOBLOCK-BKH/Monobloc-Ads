@@ -7,12 +7,11 @@
     const target = document.querySelector(".click-target");
     if (!img || !target) return;
 
-    const baseW = Number(img.dataset.baseW) || 1080;
-    const baseH = Number(img.dataset.baseH) || 2554;
-
+    const baseW = 1080;
+    const baseH = 2554;
+    
     const dw = img.clientWidth;
     const dh = img.clientHeight;
-    if (!dw || !dh) return;
 
     const sx = dw / baseW;
     const sy = dh / baseH;
@@ -23,11 +22,11 @@
     const tw = Number(target.dataset.w) * sx;
     const th = Number(target.dataset.h) * sy;
 
-    // 시작점(왼쪽 상단) 기준으로 배치
-    target.style.left = `${tx}px`;
-    target.style.top = `${ty}px`;
-    target.style.width = `${tw}px`;
-    target.style.height = `${th}px`;
+    // 데이터 좌표에 비율을 곱해 절대 위치 지정
+    target.style.left = `${Number(target.dataset.x) * sx}px`;
+    target.style.top = `${Number(target.dataset.y) * sy}px`;
+    target.style.width = `${Number(target.dataset.w) * sx}px`;
+    target.style.height = `${Number(target.dataset.h) * sy}px`;
 
     target.onclick = (e) => {
       e.preventDefault();
