@@ -1,173 +1,307 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0b0f" />
-  <title>MONOBLOC | adv</title>
-
-  <meta name="description" content="MONOBLOC adv mobile landing" />
-  <meta property="og:title" content="MONOBLOC | adv" />
-  <meta property="og:description" content="mobile landing" />
-  <meta property="og:type" content="website" />
-
-  <link rel="stylesheet" href="/css/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>중구청 광고 모집 안내 | MONOBLOC</title>
+  <meta
+    name="description"
+    content="중구청 연계 광고 모집 안내 페이지입니다. 광고 매체 소개, 진행 절차, 문의 방법을 확인하실 수 있습니다."
+  />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
-  <!--
-    ✅ 2장 이미지 랜딩 페이지
-    - 이미지 파일(2장):
-      1) /images/monobloc-1080_adv-1.png
-      2) /images/monobloc-1080_adv-2.png
+  <header class="site-header">
+    <div class="inner">
+      <a href="#top" class="logo">MONOBLOC AD</a>
+      <nav class="gnb">
+        <a href="#about">광고안내</a>
+        <a href="#media">매체소개</a>
+        <a href="#process">진행절차</a>
+        <a href="#contact">문의하기</a>
+      </nav>
+    </div>
+  </header>
 
-    - 클릭 영역 확인: URL 뒤에 ?debug=1 을 붙이면 오버레이가 표시됩니다.
-      예) https://adv.monobloc.co.kr/?debug=1
-  -->
+  <main id="top">
+    <section class="hero">
+      <div class="inner">
+        <p class="eyebrow">중구청 광고 모집 안내</p>
+        <h1>
+          도심 핵심 생활 접점에서<br />
+          브랜드를 효과적으로 알릴 수 있는<br />
+          광고 운영 안내 페이지입니다.
+        </h1>
+        <p class="hero-desc">
+          본 페이지는 광고주 및 대행사를 위한 안내용 페이지입니다.
+          광고 가능 여부, 진행 절차, 기본 문의 방법을 확인하실 수 있습니다.
+        </p>
 
-  <main class="page" aria-label="adv landing">
-    <!-- 1장 -->
-    <figure class="onepage" aria-label="adv page 1">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-01.png"
-        alt="스마트쉼터 광고매체 소개 (1/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-      />
-    </figure>
-    
-    <!-- 2장 -->
-    <figure class="onepage" aria-label="adv page 2">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-02.png"
-        alt="스마트쉼터 광고매체 소개 (2/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 3장 -->
-    <figure class="onepage" aria-label="adv page 3">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-03.png"
-        alt="스마트쉼터 광고매체 소개 (3/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 4장 -->
-    <figure class="onepage" aria-label="adv page 4">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-04.png"
-        alt="스마트쉼터 광고매체 소개 (4/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-      loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 5장 -->
-    <figure class="onepage" aria-label="adv page 5">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-05.png"
-        alt="스마트쉼터 광고매체 소개 (5/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 6장 -->
-    <figure class="onepage" aria-label="adv page 6">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-06.png"
-        alt="스마트쉼터 광고매체 소개 (6/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 7장 -->
-    <figure class="onepage" aria-label="adv page 7">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-07.png"
-        alt="스마트쉼터 광고매체 소개 (7/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 8장 -->
-    <figure class="onepage" aria-label="adv page 8">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-08.png"
-        alt="스마트쉼터 광고매체 소개 (8/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 9장 -->
-    <figure class="onepage" aria-label="adv page 9">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-09.png"
-        alt="스마트쉼터 광고매체 소개 (9/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-    
-    <!-- 10장 -->
-    <figure class="onepage" aria-label="adv page 10">
-      <img
-        class="onepage__img"
-        src="/images/monobloc-1080_adv-10.png"
-        alt="스마트쉼터 광고매체 소개 (10/10)"
-        data-base-w="1080"
-        data-base-h="1920"
-        loading="lazy"
-        decoding="async"
-      />
-      <!-- ✅ 1660-4778 전화걸기 (monobloc-1080_adv-2.png 기준 좌표: 1080x1920) -->
-      <a
-        class="hotspot"
-        href="tel:16604778"
-        aria-label="1660-4778 전화걸기"
-        data-x1="268"
-        data-y1="575"
-        data-x2="812"
-        data-y2="650"
-      ></a>
-    </figure>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">광고 문의하기</a>
+          <a href="#process" class="btn btn-secondary">진행 절차 보기</a>
+        </div>
+
+        <div class="hero-notice">
+          <div class="notice-card">
+            <strong>광고 모집 안내</strong>
+            <span>매체 소개 및 집행 문의 접수</span>
+          </div>
+          <div class="notice-card">
+            <strong>운영 협의</strong>
+            <span>일정, 소재, 기간 등 별도 협의</span>
+          </div>
+          <div class="notice-card">
+            <strong>자료 검토</strong>
+            <span>광고물 규정 및 운영 기준 검토 후 진행</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="inner">
+        <div class="section-head">
+          <p class="section-label">ABOUT</p>
+          <h2>광고 안내</h2>
+          <p>
+            중구 일대 생활 동선과 유동 인구 접점에서 노출 가능한 광고 안내 페이지입니다.
+            실제 집행 가능 여부와 세부 조건은 협의 후 확정됩니다.
+          </p>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>도심 접점 노출</h3>
+            <p>
+              생활권 중심 동선에서 자연스럽게 브랜드 메시지를 전달할 수 있는 형태의
+              광고 운영을 안내합니다.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>다양한 집행 목적 대응</h3>
+            <p>
+              브랜드 홍보, 행사 안내, 신규 오픈, 공공 연계 홍보 등
+              목적에 맞는 집행 방향을 협의할 수 있습니다.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>운영 기준 검토 후 진행</h3>
+            <p>
+              광고 소재, 집행 기간, 노출 방식은 운영 기준 및 내부 검토 절차에 따라
+              조정될 수 있습니다.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="media" class="section section-gray">
+      <div class="inner">
+        <div class="section-head">
+          <p class="section-label">MEDIA</p>
+          <h2>매체 소개</h2>
+          <p>
+            현재 이미지는 없는 상태이므로 우선 텍스트 기준으로 구성하였으며,
+            추후 실제 현장 사진이나 시안 이미지를 추가해 확장할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="media-grid">
+          <article class="media-card">
+            <div class="media-thumb placeholder-box">
+              <span>이미지 준비 예정</span>
+            </div>
+            <h3>실내형 안내 화면</h3>
+            <p>
+              이용자 체류 구간에서 시선 집중도가 높은 형태의 안내/광고 노출 구성을
+              설명하는 영역입니다.
+            </p>
+          </article>
+
+          <article class="media-card">
+            <div class="media-thumb placeholder-box">
+              <span>이미지 준비 예정</span>
+            </div>
+            <h3>보행자 방향 노출면</h3>
+            <p>
+              보행자 시선 중심으로 정보 전달이 가능한 매체 예시를 소개하는 영역입니다.
+            </p>
+          </article>
+
+          <article class="media-card">
+            <div class="media-thumb placeholder-box">
+              <span>이미지 준비 예정</span>
+            </div>
+            <h3>주변 환경 연계 노출</h3>
+            <p>
+              현장 여건과 동선에 따라 다양한 형태의 메시지 전달 방식을 협의할 수 있습니다.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="section-head">
+          <p class="section-label">POINT</p>
+          <h2>이런 광고주에게 적합합니다</h2>
+        </div>
+
+        <div class="target-grid">
+          <div class="target-card">
+            <strong>브랜드 인지도 강화</strong>
+            <p>생활권 접점에서 반복 노출이 필요한 브랜드</p>
+          </div>
+          <div class="target-card">
+            <strong>행사/오픈 안내</strong>
+            <p>행사 일정, 신규 오픈, 캠페인 안내가 필요한 경우</p>
+          </div>
+          <div class="target-card">
+            <strong>지역 기반 홍보</strong>
+            <p>특정 권역 내 소비자 접점을 강화하고 싶은 경우</p>
+          </div>
+          <div class="target-card">
+            <strong>공공 연계 메시지</strong>
+            <p>공공성 있는 내용 또는 협업성 메시지 전달이 필요한 경우</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="section section-dark">
+      <div class="inner">
+        <div class="section-head section-head-light">
+          <p class="section-label">PROCESS</p>
+          <h2>진행 절차</h2>
+          <p>
+            실제 집행은 문의 후 검토 및 협의 절차를 거쳐 확정됩니다.
+          </p>
+        </div>
+
+        <div class="process-list">
+          <article class="process-item">
+            <span class="step">01</span>
+            <div>
+              <h3>문의 접수</h3>
+              <p>광고 목적, 기간, 희망 방향, 예산 범위를 전달합니다.</p>
+            </div>
+          </article>
+
+          <article class="process-item">
+            <span class="step">02</span>
+            <div>
+              <h3>운영 가능 여부 검토</h3>
+              <p>광고 내용, 운영 기준, 일정 등을 바탕으로 가능 여부를 검토합니다.</p>
+            </div>
+          </article>
+
+          <article class="process-item">
+            <span class="step">03</span>
+            <div>
+              <h3>세부 조건 협의</h3>
+              <p>노출 기간, 진행 방식, 소재 규격, 일정 등을 협의합니다.</p>
+            </div>
+          </article>
+
+          <article class="process-item">
+            <span class="step">04</span>
+            <div>
+              <h3>집행 준비 및 운영</h3>
+              <p>최종 확정 후 소재 반영 및 운영 일정을 진행합니다.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="section-head">
+          <p class="section-label">FAQ</p>
+          <h2>자주 묻는 질문</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>광고 문의는 어떻게 하나요?</summary>
+            <p>
+              하단 문의처를 통해 연락 주시면 기본 내용을 확인한 뒤 순차적으로 안내드립니다.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>광고 소재는 자유롭게 집행 가능한가요?</summary>
+            <p>
+              아닙니다. 운영 기준 및 검토 절차에 따라 집행 가능 여부가 달라질 수 있습니다.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>구체적인 기간과 비용은 어디서 확인하나요?</summary>
+            <p>
+              집행 목적과 범위에 따라 달라질 수 있으므로 문의 후 별도 협의를 통해 안내됩니다.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>지금은 왜 이미지가 없나요?</summary>
+            <p>
+              현재는 텍스트 중심 임시 버전으로 먼저 오픈하는 단계이며,
+              추후 현장 사진과 예시 이미지를 순차적으로 반영할 예정입니다.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="inner">
+        <div class="section-head">
+          <p class="section-label">CONTACT</p>
+          <h2>광고 문의</h2>
+          <p>
+            아래 연락처 영역은 임시 문구입니다. 실제 담당자 정보로 교체해서 사용하면 됩니다.
+          </p>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-item">
+            <span class="contact-label">담당부서</span>
+            <strong>광고 운영 담당</strong>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">이메일</span>
+            <a href="mailto:contact@monobloc.co.kr">contact@monobloc.co.kr</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">전화</span>
+            <a href="tel:010-0000-0000">010-0000-0000</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">운영시간</span>
+            <strong>평일 09:00 - 18:00</strong>
+          </div>
+        </div>
+
+        <div class="contact-notice">
+          <p>
+            ※ 실제 광고 집행 여부 및 세부 조건은 검토 후 별도 협의하여 확정됩니다.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="/js/app.js"></script>
+  <footer class="site-footer">
+    <div class="inner">
+      <p>© MONOBLOC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
