@@ -3,19 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#ffffff" /> <title>MONOBLOC | 이벤트</title>
-
-  <meta name="description" content="중구 스마트쉘터 특별 이벤트" />
-  <meta property="og:title" content="MONOBLOC | 이벤트" />
-  <meta property="og:description" content="중구 주민과 함께하는 특별한 이벤트" />
-  <meta property="og:type" content="website" />
-
+  <meta name="theme-color" content="#ffffff" /> 
+  <title>MONOBLOC | 이벤트</title>
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 
 <body>
-  <main class="page" aria-label="adv landing">
-    <figure class="onepage" aria-label="adv page 1">
+  <main class="page">
+    <figure class="onepage">
       <img
         class="onepage__img"
         src="/images/monobloc_ads.png"
@@ -30,10 +25,13 @@
       <div 
         class="click-target" 
         data-tel="16004778"
-        data-x="735" 
-        data-y="2195" 
-        aria-label="전화 문의하기"
-      ></div>
+        data-x="735"   /* 중심 X 좌표 */
+        data-y="2220"  /* 중심 Y 좌표 */
+        data-w="400"   /* 클릭 영역 너비 */
+        data-h="80"    /* 클릭 영역 높이 */
+      >
+        <div class="glass-button"></div>
+      </div>
     </figure>
   </main>
 
