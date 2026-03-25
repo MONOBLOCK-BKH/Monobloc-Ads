@@ -1,19 +1,21 @@
 :root {
-  --bg: #5f9ea0; /* 이미지 배경색과 유사하게 설정하거나 기본 검정(#0b0b0f) 사용 */
+  --bg: #ffffff; /* ✅ 바탕화면 하얀색 */
   --max: 1080px;
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
+html, body { height: 100%; margin: 0; padding: 0; }
 
 body {
   background: var(--bg);
   font-family: system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 .page {
   min-height: 100vh;
+  /* Safe Area 고려 */
   padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
   display: flex;
   flex-direction: column;
@@ -24,7 +26,7 @@ body {
   margin: 0;
   width: 100%;
   max-width: var(--max);
-  position: relative;
+  position: relative; /* 자식 요소인 click-target과 icon의 기준점 */
 }
 
 .onepage__img {
@@ -35,16 +37,38 @@ body {
   user-select: none;
 }
 
-.hotspot {
+/* ✅ 실제 클릭되는 투명 영역 */
+.click-target {
   position: absolute;
+  width: 300px;  /* 원본 기준 가로 크기 */
+  height: 120px; /* 원본 기준 세로 크기 */
   background: transparent;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3); /* 클릭 시 피드백 */
-  touch-action: manipulation;
   cursor: pointer;
+  z-index: 10;
+  transform: translate(-50%, -50%); /* 중심점 기준 배치 */
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* 디버그 모드: URL 끝에 ?debug=1 붙이면 영역 확인 가능 */
-body.debug .hotspot {
+/* ✅ 동적으로 생성될 클릭 아이콘 이미지 스타일 */
+.click-icon {
+  position: absolute;
+  pointer-events: none; /* 아이콘은 클릭을 방해하지 않음 */
+  z-index: 5;
+  transform: translate(-50%, -50%); /* 중심점 기준 배치 */
+  
+  /* 예시 페이지처럼 반짝이는 애니메이션 적용 */
+  animation: pulse 1.5s infinite;
+}
+
+/* 반짝이는 애니메이션 정의 */
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+}
+
+/* 디버그 모드 (?debug=1) */
+body.debug .click-target {
   outline: 2px dashed red;
-  background: rgba(255, 0, 0, 0.2);
+  background: rgba(255, 0, 0, 0.1);
 }
