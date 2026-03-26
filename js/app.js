@@ -2,8 +2,8 @@
   const params = new URLSearchParams(window.location.search);
   if (params.has("debug")) document.body.classList.add("debug");
 
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbyCbGzZpO_Xft_3YmNQv1wmcow5AroevZsqJSQzo8RIMhCQfP3aLHLExBIbCOL4qi8NSQ/exec";
-  
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbwjkiKwJ2X2G6YXkyouwd2QcX6qJGwlkk1e7i5tLUm3hVxX5RZMOV8AjdzmvRI5_stsAA/exec";
+
   const setup = () => {
     const img = document.querySelector(".onepage__img");
     const targets = document.querySelectorAll(".click-target");
@@ -86,5 +86,6 @@
     if (mainImg.complete) setup();
     else mainImg.addEventListener("load", setup);
   }
+
   window.addEventListener("resize", setup);
 })();
