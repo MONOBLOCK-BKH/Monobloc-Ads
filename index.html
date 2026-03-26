@@ -33,8 +33,20 @@
         <div class="glass-button"></div>
       </div>
     </figure>
-  </main>
 
+    <div id="modal" class="modal-overlay">
+      <div class="modal-box">
+        <h3>선착순 신청하기</h3>
+        <p>매월 첫째 월요일 09:00 오픈 (30명 한정)</p>
+        <form id="applyForm">
+          <input type="text" id="userName" placeholder="신청자 성함" required>
+          <input type="tel" id="userTel" placeholder="연락처 (숫자만)" required pattern="[0-9]*">
+          <button type="submit" id="submitBtn">신청하기</button>
+        </form>
+        <button type="button" id="closeBtn">닫기</button>
+      </div>
+    </div>
+  </main>
   <script src="/js/app.js"></script>
 </body>
 </html>

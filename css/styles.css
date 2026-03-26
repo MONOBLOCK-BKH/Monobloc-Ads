@@ -32,40 +32,86 @@ body {
   display: block;
 }
 
-/* 실제 클릭 영역 (시작점 기준) */
+/* 실제 클릭 영역 (기존 로직 유지) */
 .click-target {
   position: absolute;
   z-index: 10;
   cursor: pointer;
-  /* 가운데 정렬 제거: app.js에서 계산한 절대 좌표에 그대로 위치시킴 */
   transform: none; 
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ✅ 더 투명해진 adv.monobloc.co.kr 스타일 입체 버튼 */
+/* ✅ 요청하신 0.03 투명도 입체 버튼 */
 .glass-button {
   width: 100%;
   height: 100%;
-  /* 투명도 대폭 강화 (0.03) */
   background: rgba(255, 255, 255, 0.03); 
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 15px; /* 텍스트 상자에 맞게 곡률 조정 */
-  
-  /* adv.monobloc.co.kr 특유의 은은한 볼록함만 유지 */
+  border-radius: 15px;
   box-shadow: 
     inset 0 2px 4px rgba(255, 255, 255, 0.2),
-    0 2px 8px rgba(0, 0, 0, 0.05);
-  
-  backdrop-filter: blur(0.5px); /* 글자가 뭉개지지 않도록 흐림 최소화 */
+    0 2px 8px rgba(0, 0, 0, 0.05);  
+  backdrop-filter: blur(0.5px);
 }
 
-/* 클릭 시 눌리는 효과 */
-.click-target:active .glass-button {
-  transform: scale(0.97);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+/* -------------------------------------------------- */
+/* ✅ 새로 추가된 신청 팝업(모달) 스타일 */
+/* -------------------------------------------------- */
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* 배경 어둡게 */
+  z-index: 1000;
+  display: none; /* 평소엔 숨김 */
+  align-items: center;
+  justify-content: center;
 }
 
-/* 디버그 모드용 */
-body.debug .click-target {
-  outline: 2px dashed red;
+.modal-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
+
+.modal-box h3 { margin: 0 0 10px 0; font-size: 20px; color: #333; }
+.modal-box p { font-size: 13px; color: #666; margin-bottom: 20px; }
+
+.modal-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+.modal-box button#submitBtn {
+  width: 100%;
+  padding: 14px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.modal-box button#closeBtn {
+  margin-top: 15px;
+  background: none;
+  border: none;
+  color: #aaa;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+body.debug .click-target { outline: 2px dashed red; }
