@@ -34,44 +34,26 @@ body {
 
 /* 실제 클릭 영역 (기존 로직 유지) */
 .click-target {
-  width: 100%;
-  height: 100%;
-  /* 배경과 테두리를 모두 없애서 완벽하게 투명하게 만듭니다 */
-  background: transparent; 
-  border: none;
-  outline: none;
-  
-  /* 마우스를 올렸을 때 클릭 가능하다는 표시만 줍니다 */
+  position: absolute;
+  z-index: 10;
   cursor: pointer;
-  
-  /* 혹시 모를 입체감 효과(shadow, blur)도 모두 제거하세요 */
-  box-shadow: none;
-  backdrop-filter: none;
+  transform: none; 
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* ✅ 요청하신 0.03 투명도 입체 버튼 */
 .glass-button {
   width: 100%;
   height: 100%;
-  /* 1. 배경을 아예 투명하게 */
-  background: transparent; 
-  
-  /* 2. 테두리도 투명하게 (0.0으로 설정) */
-  border: 1px solid rgba(255, 255, 255, 0); 
-  
-  /* 3. 그림자나 입체 효과 모두 제거 */
-  box-shadow: none;
-  
-  /* 4. 블러 효과도 제거 (뒤가 선명하게 보여야 하므로) */
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-
-  /* 5. 마우스를 올렸을 때 클릭 가능하다는 표시 */
-  cursor: pointer;
-  
-  /* 버튼 기본 스타일 제거 */
-  outline: none;
-  appearance: none;
+  background: rgba(255, 255, 255, 0); 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.05);  
+  backdrop-filter: blur(0.5px);
 }
+
 /* -------------------------------------------------- */
 /* ✅ 새로 추가된 신청 팝업(모달) 스타일 */
 /* -------------------------------------------------- */
