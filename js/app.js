@@ -40,28 +40,34 @@
   // --------------------------------------------------
   // [추가] 신청서 전송 로직 (기존 코드에는 없던 새 기능)
   // --------------------------------------------------
-  // app.js의 applyForm.onsubmit 부분을 이 코드로 교체하세요.
   applyForm.onsubmit = async (e) => {
     e.preventDefault();
     const btn = document.getElementById("submitBtn");
     
     const name = document.getElementById("userName").value.trim();
-    const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); // 숫자만 남김
+    const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); 
     const email = document.getElementById("userEmail").value.trim();
     const content = document.getElementById("applyContent").value.trim();
 
-    // 1. 필수값 체크
-    if (!name || !tel || !email || !content) {
-      alert("모든 항목을 무조건 기입해야 합니다.");
+    // 1. 이메일 형식 체크 (정규표현식)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("올바른 이메일 주소를 입력해주세요.");
       return;
     }
 
-    // 2. 연락처 유효성 체크 (10자리 또는 11자리가 아니면 오류)
+    // 2. 연락처 길이 체크 (10~11자리 필수)
     if (tel.length < 10 || tel.length > 11) {
-      alert("연락처를 10자리 또는 11자리 숫자로 정확히 입력해주세요. (현재 " + tel.length + "자리)");
+      alert("연락처를 10자리 또는 11자리 숫자로 정확히 입력해주세요.");
       return;
     }
     
+    // 3. 신청 내용 필수 체크
+    if (!content) {
+      alert("신청 내용을 기입해주세요.");
+      return;
+    }
+
     btn.disabled = true;
     btn.innerText = "처리 중...";
 
@@ -77,7 +83,7 @@
         applyForm.reset();
       }
     } catch (err) {
-      alert("서버 오류가 발생했습니다.");
+      alert("서버 연결 실패. 다시 시도해주세요.");
     } finally {
       btn.disabled = false;
       btn.innerText = "신청하기";
