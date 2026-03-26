@@ -40,53 +40,49 @@
   // --------------------------------------------------
   // [추가] 신청서 전송 로직 (기존 코드에는 없던 새 기능)
   // --------------------------------------------------
-  const applyForm = document.getElementById("applyForm");
-  // app.js 내 onsubmit 로직 수정
-  if (applyForm) {
-    applyForm.onsubmit = async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById("submitBtn");
-      const modal = document.getElementById("modal");
-      
-      const name = document.getElementById("userName").value.trim();
-      const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, '');
-      const email = document.getElementById("userEmail").value.trim();
-      const content = document.getElementById("applyContent").value.trim();
+  // app.js의 applyForm.onsubmit 부분을 이 코드로 교체하세요.
+  applyForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    
+    const name = document.getElementById("userName").value.trim();
+    const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); // 숫자만 남김
+    const email = document.getElementById("userEmail").value.trim();
+    const content = document.getElementById("applyContent").value.trim();
 
-      // 1. 연락처 유효성 검사 (숫자 10~11자리 확인)
-      if (tel.length < 10 || tel.length > 11) {
-        alert("올바른 연락처 형식이 아닙니다. 숫자만 정확히 입력해주세요.");
-        return;
+    // 1. 필수값 체크
+    if (!name || !tel || !email || !content) {
+      alert("모든 항목을 무조건 기입해야 합니다.");
+      return;
+    }
+
+    // 2. 연락처 유효성 체크 (10자리 또는 11자리가 아니면 오류)
+    if (tel.length < 10 || tel.length > 11) {
+      alert("연락처를 10자리 또는 11자리 숫자로 정확히 입력해주세요. (현재 " + tel.length + "자리)");
+      return;
+    }
+    
+    btn.disabled = true;
+    btn.innerText = "처리 중...";
+
+    try {
+      const res = await fetch(GAS_URL, { 
+        method: "POST", 
+        body: JSON.stringify({ name, tel, email, content }) 
+      });
+      const data = await res.json();
+      alert(data.message);
+      if (data.result === "success") {
+        document.getElementById("modal").style.display = "none";
+        applyForm.reset();
       }
-      
-      btn.disabled = true;
-      btn.innerText = "처리 중...";
-
-      const payload = {
-        name: name,
-        tel: tel,
-        email: email,
-        content: content
-      };
-
-      try {
-        const res = await fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) });
-        const data = await res.json();
-        
-        alert(data.message); // "중복된 연락처입니다" 또는 "신청 완료" 메시지 출력
-        
-        if (data.result === "success") {
-          modal.style.display = "none";
-          applyForm.reset();
-        }
-      } catch (err) {
-        alert("현재 신청 기간이 아니거나 서버 오류입니다.");
-      } finally {
-        btn.disabled = false;
-        btn.innerText = "신청하기";
-      }
-    };
-  }
+    } catch (err) {
+      alert("서버 오류가 발생했습니다.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "신청하기";
+    }
+  };
 
   const img = document.querySelector(".onepage__img");
   if (img.complete) setup();
