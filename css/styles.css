@@ -32,46 +32,27 @@ body {
   display: block;
 }
 
-
-/* 실제 클릭 영역 (기존 로직 유지) */
+/* 실제 클릭 영역: 좌표대로 배치하는 역할 */
 .click-target {
-  width: 100%;
-  height: 100%;
-  /* 배경과 테두리를 모두 없애서 완벽하게 투명하게 만듭니다 */
-  background: transparent; 
+  position: absolute;    /* 👈 이게 없으면 data-x, y 좌표가 안 먹습니다 (필수) */
+  z-index: 999;          /* 👈 이미지보다 위에 있도록 높게 설정 */
+  background: transparent;
   border: none;
   outline: none;
-  
-  /* 마우스를 올렸을 때 클릭 가능하다는 표시만 줍니다 */
   cursor: pointer;
-  
-  /* 혹시 모를 입체감 효과(shadow, blur)도 모두 제거하세요 */
-  box-shadow: none;
-  backdrop-filter: none;
+  -webkit-tap-highlight-color: transparent; /* 모바일 터치 시 파란 박스 방지 */
 }
 
+/* 안쪽 버튼 영역: 투명도 유지 */
 .glass-button {
   width: 100%;
   height: 100%;
-  /* 1. 배경을 아예 투명하게 */
   background: transparent; 
-  
-  /* 2. 테두리도 투명하게 (0.0으로 설정) */
-  border: 1px solid rgba(255, 255, 255, 0); 
-  
-  /* 3. 그림자나 입체 효과 모두 제거 */
+  border: none;
   box-shadow: none;
-  
-  /* 4. 블러 효과도 제거 (뒤가 선명하게 보여야 하므로) */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-
-  /* 5. 마우스를 올렸을 때 클릭 가능하다는 표시 */
-  cursor: pointer;
-  
-  /* 버튼 기본 스타일 제거 */
-  outline: none;
-  appearance: none;
+  pointer-events: none;  /* 👈 클릭 이벤트가 부모(click-target)로 잘 전달되게 함 */
 }
 
 /* -------------------------------------------------- */
