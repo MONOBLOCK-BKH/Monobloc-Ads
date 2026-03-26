@@ -12,13 +12,13 @@
     if (!img || targets.length === 0) return;
 
     const baseW = 1080;
-    const baseH = 3400; // ✅ HTML의 data-base-h와 일치시킴
+    //const baseH = 3400; // ✅ HTML의 data-base-h와 일치시킴
     
     const dw = img.clientWidth;
     const dh = img.clientHeight;
 
     const sx = dw / baseW;
-    const sy = dh / baseH;
+    const sy = sx //dh / baseH;
 
     targets.forEach(target => {
       // 모든 버튼의 좌표와 크기 설정
@@ -43,43 +43,46 @@
   // --------------------------------------------------
   // [추가] 신청서 전송 로직 (기존 코드에는 없던 새 기능)
   // --------------------------------------------------
-  applyForm.onsubmit = async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById("submitBtn");
-    
-    const name = document.getElementById("userName").value.trim();
-    const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); 
-    const email = document.getElementById("userEmail").value.trim();
-    const content = document.getElementById("applyContent").value.trim();
+  const applyForm = document.getElementById("applyForm");
+  if (applyForm) {
+    applyForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("submitBtn");
+      const modal = document.getElementById("modal");    
+      const name = document.getElementById("userName").value.trim();
+      const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); 
+      const email = document.getElementById("userEmail").value.trim();
+      const content = document.getElementById("applyContent").value.trim();
 
-    // ✅ 가짜 번호/이메일 차단 로직 추가
-    if (tel.length < 10 || tel.length > 11) {
-      alert("연락처를 정확히 입력해주세요. (10~11자리 숫자)");
-      return;
-    }
-    if (!email.includes("@") || !email.includes(".")) {
-      alert("올바른 이메일 형식이 아닙니다.");
-      return;
-    }
-
-    btn.disabled = true;
-    btn.innerText = "처리 중...";
-
-    try {
-      const res = await fetch(GAS_URL, { method: "POST", body: JSON.stringify({ name, tel, email, content }) });
-      const data = await res.json();
-      alert(data.message);
-      if (data.result === "success") {
-        document.getElementById("modal").style.display = "none";
-        applyForm.reset();
+      // ✅ 가짜 번호/이메일 차단 로직 추가
+      if (tel.length < 10 || tel.length > 11) {
+        alert("연락처를 정확히 입력해주세요. (10~11자리 숫자)");
+        return;
       }
-    } catch (err) {
-      alert("연결 오류가 발생했습니다.");
-    } finally {
-      btn.disabled = false;
-      btn.innerText = "신청하기";
-    }
-  };
+      if (!email.includes("@") || !email.includes(".")) {
+        alert("올바른 이메일 형식이 아닙니다.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "처리 중...";
+
+      try {
+        const res = await fetch(GAS_URL, { method: "POST", body: JSON.stringify({ name, tel, email, content }) });
+        const data = await res.json();
+        alert(data.message);
+        if (data.result === "success") {
+          document.getElementById("modal").style.display = "none";
+          applyForm.reset();
+        }
+      } catch (err) {
+        alert("연결 오류가 발생했습니다.");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "신청하기";
+      }
+    };
+  }
 
   const img = document.querySelector(".onepage__img");
   if (img.complete) setup();
