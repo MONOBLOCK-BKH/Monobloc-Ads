@@ -4,7 +4,7 @@
 
   // ✅ 구글 웹 앱 주소
   const GAS_URL = "https://script.google.com/macros/s/AKfycbyCbGzZpO_Xft_3YmNQv1wmcow5AroevZsqJSQzo8RIMhCQfP3aLHLExBIbCOL4qi8NSQ/exec";
-
+  
   const setup = () => {
     const img = document.querySelector(".onepage__img");
     const target = document.querySelector(".click-target");
@@ -41,24 +41,40 @@
   // [추가] 신청서 전송 로직 (기존 코드에는 없던 새 기능)
   // --------------------------------------------------
   const applyForm = document.getElementById("applyForm");
+  // app.js 내 onsubmit 로직 수정
   if (applyForm) {
     applyForm.onsubmit = async (e) => {
       e.preventDefault();
       const btn = document.getElementById("submitBtn");
       const modal = document.getElementById("modal");
       
+      const name = document.getElementById("userName").value.trim();
+      const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, '');
+      const email = document.getElementById("userEmail").value.trim();
+      const content = document.getElementById("applyContent").value.trim();
+
+      // 1. 연락처 유효성 검사 (숫자 10~11자리 확인)
+      if (tel.length < 10 || tel.length > 11) {
+        alert("올바른 연락처 형식이 아닙니다. 숫자만 정확히 입력해주세요.");
+        return;
+      }
+      
       btn.disabled = true;
       btn.innerText = "처리 중...";
 
       const payload = {
-        name: document.getElementById("userName").value,
-        tel: document.getElementById("userTel").value
+        name: name,
+        tel: tel,
+        email: email,
+        content: content
       };
 
       try {
         const res = await fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) });
         const data = await res.json();
-        alert(data.message);
+        
+        alert(data.message); // "중복된 연락처입니다" 또는 "신청 완료" 메시지 출력
+        
         if (data.result === "success") {
           modal.style.display = "none";
           applyForm.reset();
