@@ -49,22 +49,13 @@
     const email = document.getElementById("userEmail").value.trim();
     const content = document.getElementById("applyContent").value.trim();
 
-    // 1. 이메일 형식 체크 (정규표현식)
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("올바른 이메일 주소를 입력해주세요.");
-      return;
-    }
-
-    // 2. 연락처 길이 체크 (10~11자리 필수)
+    // ✅ 가짜 번호/이메일 차단 로직 추가
     if (tel.length < 10 || tel.length > 11) {
-      alert("연락처를 10자리 또는 11자리 숫자로 정확히 입력해주세요.");
+      alert("연락처를 정확히 입력해주세요. (10~11자리 숫자)");
       return;
     }
-    
-    // 3. 신청 내용 필수 체크
-    if (!content) {
-      alert("신청 내용을 기입해주세요.");
+    if (!email.includes("@") || !email.includes(".")) {
+      alert("올바른 이메일 형식이 아닙니다.");
       return;
     }
 
@@ -72,10 +63,7 @@
     btn.innerText = "처리 중...";
 
     try {
-      const res = await fetch(GAS_URL, { 
-        method: "POST", 
-        body: JSON.stringify({ name, tel, email, content }) 
-      });
+      const res = await fetch(GAS_URL, { method: "POST", body: JSON.stringify({ name, tel, email, content }) });
       const data = await res.json();
       alert(data.message);
       if (data.result === "success") {
@@ -83,7 +71,7 @@
         applyForm.reset();
       }
     } catch (err) {
-      alert("서버 연결 실패. 다시 시도해주세요.");
+      alert("연결 오류가 발생했습니다.");
     } finally {
       btn.disabled = false;
       btn.innerText = "신청하기";
