@@ -46,13 +46,16 @@
     <div id="modal" class="modal-overlay">
       <div class="modal-box">
         <h3>선착순 신청하기</h3>
-        <p>매월 첫째 월요일 09:00 오픈 (30명 한정)<br><strong>* 모든 항목은 무조건 기입해야 합니다.</strong></p>
+        <p>매월 첫째 월요일 09:00 오픈 (30명 한정)<br>
+            <strong>* 모든 항목은 무조건 기입해야 합니다.</strong><br>
+            <span class="highlight">* 이미 신청하신 분은 연락처 입력 시 순번 확인이 가능합니다.</span>
+        </p>
         <form id="applyForm">
           <input type="text" id="userName" placeholder="성함 (무조건 기입)" required>
           <input type="tel" id="userTel" placeholder="연락처 ('-' 없이 숫자만, 무조건 기입)" required>
           <input type="email" id="userEmail" placeholder="이메일 (무조건 기입)" required>
-          <textarea id="applyContent" placeholder="신청 내용 (무조건 기입)" required style="width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; outline: none; height: 80px; resize: none;"></textarea>
-          <button type="submit" id="submitBtn">신청하기</button>
+          <textarea id="applyContent" placeholder="신청 내용" required style="width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; outline: none; height: 80px; resize: none;"></textarea>
+          <button type="submit" id="submitBtn">신청하기 / 순번 확인</button>
         </form>
         <button type="button" id="closeBtn">닫기</button>
       </div>
