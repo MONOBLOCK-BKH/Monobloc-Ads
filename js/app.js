@@ -7,12 +7,12 @@
   
   const setup = () => {
     const img = document.querySelector(".onepage__img");
-    const target = document.querySelector(".click-target");
+    const targets = document.querySelectorAll(".click-target"); // ✅ 모든 버튼 찾기
     const modal = document.getElementById("modal");
-    if (!img || !target) return;
+    if (!img || targets.length === 0) return;
 
     const baseW = 1080;
-    const baseH = 2554;
+    const baseH = 3400; // ✅ HTML의 data-base-h와 일치시킴
     
     const dw = img.clientWidth;
     const dh = img.clientHeight;
@@ -20,19 +20,22 @@
     const sx = dw / baseW;
     const sy = dh / baseH;
 
-    // 데이터 좌표에 비율을 곱해 절대 위치 지정 (기존 로직 동일)
-    target.style.left = `${Number(target.dataset.x) * sx}px`;
-    target.style.top = `${Number(target.dataset.y) * sy}px`;
-    target.style.width = `${Number(target.dataset.w) * sx}px`;
-    target.style.height = `${Number(target.dataset.h) * sy}px`;
+    targets.forEach(target => {
+      // 모든 버튼의 좌표와 크기 설정
+      target.style.left = `${Number(target.dataset.x) * sx}px`;
+      target.style.top = `${Number(target.dataset.y) * sy}px`;
+      target.style.width = `${Number(target.dataset.w) * sx}px`;
+      target.style.height = `${Number(target.dataset.h) * sy}px`;
 
-    // ✅ [변경] 클릭 시 전화걸기 대신 모달(신청란) 띄우기
-    target.onclick = (e) => {
-      e.preventDefault();
-      if (modal) modal.style.display = "flex";
-    };
+      // ✅ [중요] 광고 신청 버튼(링크가 있는 경우)은 모달을 띄우지 않음
+      if (!target.hasAttribute('onclick')) {
+        target.onclick = (e) => {
+          e.preventDefault();
+          if (modal) modal.style.display = "flex";
+        };
+      }
+    });
     
-    // 모달 닫기 버튼
     const closeBtn = document.getElementById("closeBtn");
     if (closeBtn) closeBtn.onclick = () => { modal.style.display = "none"; };
   };
