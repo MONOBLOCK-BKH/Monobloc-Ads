@@ -104,22 +104,7 @@
     applyForm.onsubmit = async (e) => {
       e.preventDefault();
 
-      // ✅ 3. 기간 제한 검사 (공휴일 피한 첫 영업일 09:00 ~ 20일 23:59)
-      const now = new Date();
-      const startDay = getFirstWorkingDay(now.getFullYear(), now.getMonth()); 
-      const endDay = new Date(now.getFullYear(), now.getMonth(), 20, 23, 59, 59);
-
-      if (now < startDay) {
-        const m = startDay.getMonth() + 1;
-        const d = startDay.getDate();
-        alert(`신청 기간이 아닙니다.\n이번 달은 공휴일을 제외한 첫 영업일인 [${m}월 ${d}일 09:00]부터 신청 가능합니다.`);
-        return;
-      }
-      if (now > endDay) {
-        alert("이번 달 신청 기간이 마감되었습니다. (매월 20일 종료)");
-        return;
-      }
-
+      
       const btn = document.getElementById("submitBtn");
       const modal = document.getElementById("modal");
       const resultModal = document.getElementById("resultModal");
