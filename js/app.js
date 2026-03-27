@@ -3,8 +3,57 @@
   if (params.has("debug")) document.body.classList.add("debug");
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwjkiKwJ2X2G6YXkyouwd2QcX6qJGwlkk1e7i5tLUm3hVxX5RZMOV8AjdzmvRI5_stsAA/exec";
+  
+  // ✅ 주말 및 공휴일을 피해 첫 영업일(오전 9시)을 찾는 함수
+  const getFirstWorkingDay = (year, month) => {
+    // 💡 여기에 쉬는 날(공휴일, 대체휴무일 등)을 YYYY-MM-DD 형식으로 적어주세요.
+    const holidays = [
+      "2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", // 신정, 설날 연휴
+      "2026-03-01", "2026-03-02", // 삼일절 및 대체휴일
+      "2026-05-05", "2026-05-24", "2026-05-25", // 어린이날, 부처님오신날 및 대체휴일
+      "2026-06-06", // 현충일
+      "2026-08-15", "2026-08-17", // 광복절 및 대체휴일
+      "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-28", // 추석 연휴 및 대체휴일
+      "2026-10-03", "2026-10-09", // 개천절, 한글날
+      "2026-12-25" // 크리스마스
+    ];
+
+    let date = new Date(year, month, 1, 9, 0, 0); // 매월 1일 09시 00분 00초부터 시작
+
+    while (true) {
+      const dayOfWeek = date.getDay(); // 0: 일요일, 6: 토요일
+      
+      // 날짜를 YYYY-MM-DD 형태로 변환하여 비교 준비
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      const dateString = `${yyyy}-${mm}-${dd}`;
+
+      // 토/일요일이거나 holidays 배열에 있는 날짜라면 하루(24시간)를 더함
+      if (dayOfWeek === 0 || dayOfWeek === 6 || holidays.includes(dateString)) {
+        date.setDate(date.getDate() + 1);
+      } else {
+        break; // 평일 영업일을 찾으면 반복문 종료
+      }
+    }
+    return date;
+  };
 
   const setup = () => {
+    // ---------------------------------------------------------
+    // ✅ [추가] 화면 안내 텍스트 자동 업데이트 (매달 자동 계산)
+    // ---------------------------------------------------------
+    const now = new Date();
+    const startDay = getFirstWorkingDay(now.getFullYear(), now.getMonth());
+    const m = startDay.getMonth() + 1;
+    const d = startDay.getDate();
+    
+    const periodText = document.getElementById("periodText");
+    if (periodText) {
+      periodText.innerHTML = `이번 달은 ${m}월 ${d}일 09:00부터<br>${m}월 20일 23:59:59까지 신청 가능합니다.<br>(30명 한정)`;
+    }
+    // ---------------------------------------------------------
+
     const img = document.querySelector(".onepage__img");
     const targets = document.querySelectorAll(".click-target");
     const modal = document.getElementById("modal");
@@ -54,6 +103,23 @@
   if (applyForm) {
     applyForm.onsubmit = async (e) => {
       e.preventDefault();
+
+      // ✅ 3. 기간 제한 검사 (공휴일 피한 첫 영업일 09:00 ~ 20일 23:59)
+      const now = new Date();
+      const startDay = getFirstWorkingDay(now.getFullYear(), now.getMonth()); 
+      const endDay = new Date(now.getFullYear(), now.getMonth(), 20, 23, 59, 59);
+
+      if (now < startDay) {
+        const m = startDay.getMonth() + 1;
+        const d = startDay.getDate();
+        alert(`신청 기간이 아닙니다.\n이번 달은 공휴일을 제외한 첫 영업일인 [${m}월 ${d}일 09:00]부터 신청 가능합니다.`);
+        return;
+      }
+      if (now > endDay) {
+        alert("이번 달 신청 기간이 마감되었습니다. (매월 20일 종료)");
+        return;
+      }
+
       const btn = document.getElementById("submitBtn");
       const modal = document.getElementById("modal");
       const resultModal = document.getElementById("resultModal");
