@@ -75,7 +75,7 @@
         alert("연결 오류가 발생했습니다.");
       } finally {
         btn.disabled = false;
-        btn.innerText = "신청하기";
+        btn.innerText = "신청하기 / 순번 확인";
       }
     };
   }
