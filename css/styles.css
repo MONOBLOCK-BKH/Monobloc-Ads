@@ -81,13 +81,34 @@ body {
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 
+  /* ✅ 아이폰 잘림 해결: 모달 내 스크롤 활성화 (원본 유지) */
+  max-height: 85vh;        
+  overflow-y: auto;       
+  -webkit-overflow-scrolling: touch; 
+  /* ✅ 우측 상단 X 버튼 배치를 위한 상대적 위치 설정 (필수 추가) */
+  position: relative;
+}
+
   /* -------------------------------------------------- */
   /* ✅ [핵심] 아이폰 잘림 해결: 모달 내 스크롤 활성화 */
   /* -------------------------------------------------- */
-  max-height: 85vh;        /* 화면 높이의 최대 85%까지만 차지 */
-  overflow-y: auto;       /* 내용이 많으면 내부 스크롤바 생성 */
-  -webkit-overflow-scrolling: touch; /* 아이폰에서 부드러운 스크롤 */
-  /* -------------------------------------------------- */
+.modal-close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  /* 버튼이 내용물에 가려지지 않도록 높은 z-index 설정 */
+  z-index: 1001;
+}
+
+.modal-close-icon:hover {
+  color: #000;
 }
 
 .modal-box h3 { margin: 0 0 10px 0; font-size: 20px; color: #333; }

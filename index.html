@@ -45,6 +45,8 @@
 
     <div id="modal" class="modal-overlay">
       <div class="modal-box">
+        <button type="button" class="modal-close-icon" id="headerCloseBtn">&times;</button>
+        
         <h3>선착순 신청하기<br>(테스트중 30일까지 신청가능)</h3>
         <p id="periodText" style="line-height: 1.5;">신청 기간 계산 중...</p>
         <p><strong>* 항목은 필수 기입해야 합니다.</strong></p>
@@ -77,7 +79,9 @@
       </div>
     </div>
     <div id="resultModal" class="modal-overlay">
-      <div class="modal-box" style="border: 2px solid #000; max-width: 400px;">
+      <div class="modal-box" style="border: 2px solid #000; max-width: 400px; position: relative;">
+        <button type="button" class="modal-close-icon" id="resultHeaderCloseBtn">&times;</button>
+        
         <div id="resultText" style="font-size: 22px; font-weight: 800; line-height: 1.5; color: #000; padding: 20px 0; white-space: pre-line; word-break: keep-all;">
           </div>
         <button type="button" id="resultCloseBtn" style="width:100%; padding:14px; background:#000; color:#fff; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">확인</button>
