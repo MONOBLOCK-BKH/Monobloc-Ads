@@ -53,6 +53,21 @@
           <input type="tel" id="userTel" placeholder="* 연락처 ('-' 없이 숫자만, 필수 기입)" required>
           <input type="email" id="userEmail" placeholder="* 이메일 (필수 기입)" required>
           <textarea id="applyContent" placeholder="신청 내용" required style="width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; outline: none; height: 80px; resize: none;"></textarea>
+                    
+          <div class="privacy-policy-container">
+            <div class="privacy-policy-text">
+[개인정보 수집 및 이용 동의서]
+
+1. 수집 항목: 성함, 연락처, 이메일, 신청 내용
+2. 수집 목적: 선착순 이벤트 진행, 순번 확인 및 본인 식별, 관련 안내 및 공지
+3. 보유 기간: 이벤트 종료 및 민원 처리 완료 후 6개월까지 보관 후 파기
+4. 동의 거부 권리: 귀하는 동의를 거부할 권리가 있으며, 거부 시 이벤트 참여가 제한될 수 있습니다.
+            </div>
+          </div>
+          <div class="agree-wrapper">
+            <input type="checkbox" id="agreePrivacy" name="agreePrivacy" required>
+            <label for="agreePrivacy">[필수] 개인정보 수집 및 이용에 동의합니다.</label>
+          </div>
           <button type="submit" id="submitBtn">신청하기 / 순번 확인</button>
         </form>
         <p>

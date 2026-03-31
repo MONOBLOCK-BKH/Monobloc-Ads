@@ -115,6 +115,12 @@
     applyForm.onsubmit = async (e) => {
       e.preventDefault();
 
+      // ✅ 개인정보 동의 체크 여부 확인 로직
+      const agreePrivacy = document.getElementById("agreePrivacy");
+      if (agreePrivacy && !agreePrivacy.checked) {
+        alert("개인정보 수집 및 이용에 동의해야 신청이 가능합니다.");
+        return;
+      }
 
       const btn = document.getElementById("submitBtn");
       const modal = document.getElementById("modal");
