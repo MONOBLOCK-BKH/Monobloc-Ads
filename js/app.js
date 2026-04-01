@@ -135,7 +135,8 @@
 
       if (!name) {
         alert("성함을 입력해주세요.");
-        nameInput.focus();
+        //nameInput.focus();
+        username.focus();
         return;
       }
       if (!tel) {
