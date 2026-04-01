@@ -128,15 +128,20 @@
 
       // ✅ 개인정보 동의 체크 여부 확인 로직
       // ✅ [추가] 브라우저 영어 메시지 대신 한국어 알림 처리
-      const name = document.getElementById("userName").value.trim();
-      const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); 
-      const email = document.getElementById("userEmail").value.trim();
+      // ✅ [추가] 입력 요소들을 변수에 담아 커서 이동 시 사용
+      const nameInput = document.getElementById("userName");
+      const telInput = document.getElementById("userTel");
+      const emailInput = document.getElementById("userEmail");
       const agreePrivacy = document.getElementById("agreePrivacy");
 
+      const name = nameInput.value.trim();
+      const tel = telInput.value.replace(/[^0-9]/g, ''); 
+      const email = emailInput.value.trim();
+
+      // ✅ 필수 항목 체크 및 커서 이동(focus)
       if (!name) {
         alert("성함을 입력해주세요.");
-        //nameInput.focus();
-        username.focus();
+        nameInput.focus();
         return;
       }
       if (!tel) {
