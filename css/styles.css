@@ -100,7 +100,7 @@ body {
   font-size: 24px;
   color: #888;
   cursor: pointer;
-  padding: 0;
+  padding: 10px; /* 터치 영역 확보 */
   line-height: 1;
   /* 버튼이 내용물에 가려지지 않도록 높은 z-index 설정 */
   z-index: 1100;

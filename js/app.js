@@ -94,8 +94,15 @@
     
     // ✅ 1. 신청 모달 닫기: 닫을 때 내용을 싹 지웁니다 (개인정보 보호)
     const closeBtn = document.getElementById("closeBtn");
+    const headerCloseBtn = document.getElementById("headerCloseBtn"); // ✨ 추가
     if (closeBtn && modal) {
       closeBtn.onclick = () => { 
+        modal.style.display = "none"; 
+        if (applyForm) applyForm.reset(); 
+      };
+    }
+    if (headerCloseBtn && modal) { // ✨ 추가
+      headerCloseBtn.onclick = () => { 
         modal.style.display = "none"; 
         if (applyForm) applyForm.reset(); 
       };
@@ -103,9 +110,13 @@
 
     // ✅ 2. 결과 모달 닫기 버튼 연결
     const resultCloseBtn = document.getElementById("resultCloseBtn");
+    const resultHeaderCloseBtn = document.getElementById("resultHeaderCloseBtn"); // ✨ 추가
     const resultModal = document.getElementById("resultModal");
     if (resultCloseBtn && resultModal) {
       resultCloseBtn.onclick = () => { resultModal.style.display = "none"; };
+    }
+    if (resultHeaderCloseBtn && resultModal) { // ✨ 추가
+      resultHeaderCloseBtn.onclick = () => { resultModal.style.display = "none"; };
     }
   };
 
