@@ -133,6 +133,17 @@
       const email = emailInput.value.trim();
       const content = document.getElementById("applyContent").value.trim();
 
+      const resultModal = document.getElementById("resultModal");
+      const resultText = document.getElementById("resultText");
+
+      // ✅ [커스텀 알림 함수] alert 대신 메시지 모달을 띄움
+      const showMsg = (msg) => {
+        if (resultText && resultModal) {
+          resultText.innerText = msg;
+          resultModal.style.display = "flex";
+        }
+      };
+
       // ✅ 필수 항목 체크 및 커서 이동(focus)
       if (!name) {
         alert("성함을 입력해주세요.");
@@ -144,27 +155,29 @@
         telInput.focus();
         return;
       }
-      if (tel.length < 10 || tel.length > 11) { alert("연락처를 정확히 입력해주세요. (10~11자리 숫자)"); telInput.focus(); return; }
+      if (tel.length < 10 || tel.length > 11) {
+        showMsg("연락처를 정확히 입력해주세요. (10~11자리 숫자)"); 
+        telInput.focus(); 
+        return; 
+      }
       if (!email) {
-         alert("이메일을 입력해주세요.");
-          emailInput.focus();
-          return;
+        showMsg("이메일을 입력해주세요.");
+        emailInput.focus();
+        return;
       }
       if (!email.includes("@") || !email.includes(".")) {
-        alert("올바른 이메일 형식이 아닙니다.");
+        showMsg("올바른 이메일 형식이 아닙니다.");
         emailInput.focus();
         return;
       }
       if (agreePrivacy && !agreePrivacy.checked) {
-        alert("개인정보 수집 및 이용에 동의해야 신청이 가능합니다.");
+        showMsg("개인정보 수집 및 이용에 동의해야 신청이 가능합니다.");
         agreePrivacy.focus();
         return;
       }
 
       const btn = document.getElementById("submitBtn");
       const modal = document.getElementById("modal");
-      const resultModal = document.getElementById("resultModal");
-      const resultText = document.getElementById("resultText");
 
       btn.disabled = true;
       btn.innerText = "처리 중...";
@@ -177,17 +190,14 @@
         const data = await res.json();
         
         // ✅ 3. 결과 알림창 대신 큰 메세지 모달 띄우기
-        if (resultText && resultModal) {
-          resultText.innerText = data.message;
-          resultModal.style.display = "flex";
-        }
+        showMsg(data.message);
 
         if (data.result === "success") {
           if (modal) modal.style.display = "none";
           applyForm.reset(); // 성공 시 폼 초기화
         }
       } catch (err) {
-        alert("연결 오류가 발생했습니다.");
+        showMsg("연결 오류가 발생했습니다.");
       } finally {
         btn.disabled = false;
         btn.innerText = "신청하기 / 순번 확인";
