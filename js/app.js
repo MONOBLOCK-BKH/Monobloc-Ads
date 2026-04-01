@@ -127,7 +127,15 @@
       e.preventDefault();
 
       // ✅ 개인정보 동의 체크 여부 확인 로직
+      // ✅ [추가] 브라우저 영어 메시지 대신 한국어 알림 처리
+      const name = document.getElementById("userName").value.trim();
+      const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); 
+      const email = document.getElementById("userEmail").value.trim();
       const agreePrivacy = document.getElementById("agreePrivacy");
+
+      if (!name) { alert("성함을 입력해주세요."); return; }
+      if (!tel) { alert("연락처를 입력해주세요."); return; }
+      if (!email) { alert("이메일을 입력해주세요."); return; }
       if (agreePrivacy && !agreePrivacy.checked) {
         alert("개인정보 수집 및 이용에 동의해야 신청이 가능합니다.");
         return;
@@ -137,10 +145,6 @@
       const modal = document.getElementById("modal");
       const resultModal = document.getElementById("resultModal");
       const resultText = document.getElementById("resultText");
-
-      const name = document.getElementById("userName").value.trim();
-      const tel = document.getElementById("userTel").value.replace(/[^0-9]/g, ''); 
-      const email = document.getElementById("userEmail").value.trim();
       const content = document.getElementById("applyContent").value.trim();
 
       if (tel.length < 10 || tel.length > 11) {
