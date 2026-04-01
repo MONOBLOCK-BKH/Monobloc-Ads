@@ -29,10 +29,12 @@
       "2027-12-25", "2027-12-27" // 크리스마스 및 대체휴일
     ];
 
-    let date = new Date(year, month, 1, 9, 0, 0); // 매월 1일 09시 00분 00초부터 시작
+    // 매월 1일 09시 00분 00초부터 시작
+    let date = new Date(year, month, 1, 9, 0, 0);
 
     while (true) {
-      const dayOfWeek = date.getDay(); // 0: 일요일, 6: 토요일
+      // 0: 일요일, 6: 토요일
+      const dayOfWeek = date.getDay();
       
       // 날짜를 YYYY-MM-DD 형태로 변환하여 비교 준비
       const yyyy = date.getFullYear();
@@ -63,8 +65,8 @@
     if (periodText) {
       periodText.innerHTML = `이번 달은 ${m}월 ${d}일 09:00부터<br>${m}월 20일 23:59:59까지 신청 가능합니다.<br>(30명 한정)`;
     }
-    // ---------------------------------------------------------
 
+    // 2. 이미지 레이아웃 및 클릭 타겟 설정
     const img = document.querySelector(".onepage__img");
     const targets = document.querySelectorAll(".click-target");
     const modal = document.getElementById("modal");
@@ -92,32 +94,24 @@
       }
     });
     
-    // ✅ 1. 신청 모달 닫기: 닫을 때 내용을 싹 지웁니다 (개인정보 보호)
+    // ✅ 신청 모달 닫기: 닫을 때 내용을 싹 지웁니다 (개인정보 보호)
+    // 3. 모달 닫기 이벤트 연결
+    const closeModal = () => {
+      if (modal) modal.style.display = "none";
+      if (applyForm) applyForm.reset();
+    };
+    
     const closeBtn = document.getElementById("closeBtn");
-    const headerCloseBtn = document.getElementById("headerCloseBtn"); // ✨ 추가
-    if (closeBtn && modal) {
-      closeBtn.onclick = () => { 
-        modal.style.display = "none"; 
-        if (applyForm) applyForm.reset(); 
-      };
-    }
-    if (headerCloseBtn && modal) { // ✨ 추가
-      headerCloseBtn.onclick = () => { 
-        modal.style.display = "none"; 
-        if (applyForm) applyForm.reset(); 
-      };
-    }
+    const headerCloseBtn = document.getElementById("headerCloseBtn"); 
+    if (closeBtn) closeBtn.onclick = closeModal;
+    if (headerCloseBtn) headerCloseBtn.onclick = closeModal;
 
-    // ✅ 2. 결과 모달 닫기 버튼 연결
-    const resultCloseBtn = document.getElementById("resultCloseBtn");
-    const resultHeaderCloseBtn = document.getElementById("resultHeaderCloseBtn"); // ✨ 추가
     const resultModal = document.getElementById("resultModal");
-    if (resultCloseBtn && resultModal) {
-      resultCloseBtn.onclick = () => { resultModal.style.display = "none"; };
-    }
-    if (resultHeaderCloseBtn && resultModal) { // ✨ 추가
-      resultHeaderCloseBtn.onclick = () => { resultModal.style.display = "none"; };
-    }
+    const resultCloseBtn = document.getElementById("resultCloseBtn");
+    const resultHeaderCloseBtn = document.getElementById("resultHeaderCloseBtn");
+
+    if (resultCloseBtn) resultCloseBtn.onclick = () => { resultModal.style.display = "none"; };
+    if (resultHeaderCloseBtn) resultHeaderCloseBtn.onclick = () => { resultModal.style.display = "none"; };
   };
 
   // 신청서 전송 로직
@@ -137,6 +131,7 @@
       const name = nameInput.value.trim();
       const tel = telInput.value.replace(/[^0-9]/g, ''); 
       const email = emailInput.value.trim();
+      const content = document.getElementById("applyContent").value.trim();
 
       // ✅ 필수 항목 체크 및 커서 이동(focus)
       if (!name) {
@@ -149,10 +144,16 @@
         telInput.focus();
         return;
       }
+      if (tel.length < 10 || tel.length > 11) { alert("연락처를 정확히 입력해주세요. (10~11자리 숫자)"); telInput.focus(); return; }
       if (!email) {
          alert("이메일을 입력해주세요.");
           emailInput.focus();
           return;
+      }
+      if (!email.includes("@") || !email.includes(".")) {
+        alert("올바른 이메일 형식이 아닙니다.");
+        emailInput.focus();
+        return;
       }
       if (agreePrivacy && !agreePrivacy.checked) {
         alert("개인정보 수집 및 이용에 동의해야 신청이 가능합니다.");
@@ -164,24 +165,15 @@
       const modal = document.getElementById("modal");
       const resultModal = document.getElementById("resultModal");
       const resultText = document.getElementById("resultText");
-      const content = document.getElementById("applyContent").value.trim();
-
-      if (tel.length < 10 || tel.length > 11) {
-        alert("연락처를 정확히 입력해주세요. (10~11자리 숫자)");
-        telInput.focus();
-        return;
-      }
-      if (!email.includes("@") || !email.includes(".")) {
-        alert("올바른 이메일 형식이 아닙니다.");
-        emailInput.focus();
-        return;
-      }
 
       btn.disabled = true;
       btn.innerText = "처리 중...";
 
       try {
-        const res = await fetch(GAS_URL, { method: "POST", body: JSON.stringify({ name, tel, email, content }) });
+        const res = await fetch(GAS_URL, {
+          method: "POST",
+          body: JSON.stringify({ name, tel, email, content })
+        });
         const data = await res.json();
         
         // ✅ 3. 결과 알림창 대신 큰 메세지 모달 띄우기
