@@ -133,11 +133,24 @@
       const email = document.getElementById("userEmail").value.trim();
       const agreePrivacy = document.getElementById("agreePrivacy");
 
-      if (!name) { alert("성함을 입력해주세요."); return; }
-      if (!tel) { alert("연락처를 입력해주세요."); return; }
-      if (!email) { alert("이메일을 입력해주세요."); return; }
+      if (!name) {
+        alert("성함을 입력해주세요.");
+        nameInput.focus();
+        return;
+      }
+      if (!tel) {
+        alert("연락처를 입력해주세요.");
+        telInput.focus();
+        return;
+      }
+      if (!email) {
+         alert("이메일을 입력해주세요.");
+          emailInput.focus();
+          return;
+      }
       if (agreePrivacy && !agreePrivacy.checked) {
         alert("개인정보 수집 및 이용에 동의해야 신청이 가능합니다.");
+        agreePrivacy.focus();
         return;
       }
 
@@ -149,10 +162,12 @@
 
       if (tel.length < 10 || tel.length > 11) {
         alert("연락처를 정확히 입력해주세요. (10~11자리 숫자)");
+        telInput.focus();
         return;
       }
       if (!email.includes("@") || !email.includes(".")) {
         alert("올바른 이메일 형식이 아닙니다.");
+        emailInput.focus();
         return;
       }
 
