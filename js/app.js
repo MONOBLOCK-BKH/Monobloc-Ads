@@ -2,7 +2,7 @@
   const params = new URLSearchParams(window.location.search);
   if (params.has("debug")) document.body.classList.add("debug");
 
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbwzOOee9dAjL4QYAxSKgw29vn1PtxsR-C48Q7b1MaTjjw8qW6SAmOG89SGU_oYelkApxg/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbzwjH2bJlK5a4aAoWCBTdTOrMJfz2lkr0QFxtmXeRggUrbr9i9Mw39Ggqxm1o0jnS7NRw/exec";
   
   // ✅ 주말 및 공휴일을 피해 첫 영업일(오전 9시)을 찾는 함수
   const getFirstWorkingDay = (year, month) => {
