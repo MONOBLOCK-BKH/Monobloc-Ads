@@ -34,9 +34,9 @@ function doPost(e) {
   const rows = sheet.getDataRange().getValues();
   let currentMonthDataIndices = []; 
   // 중복 발생 시 결과를 담아둘 변수
-  let duplicateResult = null;
+  let duplicateResult = null; 
 
-  // ✅ 1. 데이터베이스 스캔 및 실시간 순번 계산용 리스트업
+  // ✅ 1. 데이터베이스 스캔 및 실시간 순번 계산용 리스트용
   for (let i = 1; i < rows.length; i++) {
     // A열에 기록된 신청시간이 아닌, 다른 열에 '대상 월'을 기록하지 않는다면 
     // 일단 기존 데이터의 신청 시간을 기준으로 판별하거나 로직을 정해야 합니다.
