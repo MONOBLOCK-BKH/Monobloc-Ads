@@ -19,6 +19,30 @@ function doPost(e) {
   const inputEmail = data.email.trim();
   const inputContent = data.content ? data.content.trim() : "";
 
+  // ✅ 사용자에게 노출할 접수 상태 문구: 순번은 숨기고 대상자/예비만 표시
+  const getUserStatusLabel = (orderNum) => orderNum <= 30 ? "대상자" : "예비";
+
+  const getUserGuideText = (orderNum) => {
+    return orderNum <= 30
+      ? "대상자에게는 추후 개별 연락드릴 예정입니다."
+      : "이전 대상자 결원이 발생하면 순차적으로 추가 등록 안내를 드릴 예정입니다.";
+  };
+
+  const getUserResultMessage = (orderNum) => {
+    const userStatusLabel = getUserStatusLabel(orderNum);
+    const userGuideText = getUserGuideText(orderNum);
+
+    if (orderNum <= 30) {
+      return `[신청 완료]\n${eventMonth}월 이벤트 신청이 완료되었습니다.\n\n` +
+             `• 접수 상태: ${userStatusLabel}\n` +
+             `• 안내: ${userGuideText}`;
+    }
+
+    return `[예비 등록]\n${eventMonth}월 이벤트 예비로 등록되었습니다.\n\n` +
+           `• 접수 상태: ${userStatusLabel}\n` +
+           `• 안내: ${userGuideText}`;
+  };
+
   // ✅ [추가] 빈 행(내용이 지워진 행)을 실제로 삭제하여 위로 밀기
   let tempRows = sheet.getDataRange().getValues();
   // 아래에서 위로 올라가며 지워야 행 번호가 꼬이지 않습니다.
@@ -34,9 +58,9 @@ function doPost(e) {
   const rows = sheet.getDataRange().getValues();
   let currentMonthDataIndices = []; 
   // 중복 발생 시 결과를 담아둘 변수
-  let duplicateResult = null; 
+  let duplicateResult = null;
 
-  // ✅ 1. 데이터베이스 스캔 및 실시간 순번 계산용 리스트용
+  // ✅ 1. 데이터베이스 스캔 및 실시간 순번 계산용 리스트업
   for (let i = 1; i < rows.length; i++) {
     // A열에 기록된 신청시간이 아닌, 다른 열에 '대상 월'을 기록하지 않는다면 
     // 일단 기존 데이터의 신청 시간을 기준으로 판별하거나 로직을 정해야 합니다.
@@ -60,9 +84,10 @@ function doPost(e) {
       let savedEmail = rows[i][3] ? rows[i][3].toString().trim() : "";
       let savedContent = rows[i][4] ? rows[i][4].toString() : "";
 
-      // 실시간으로 현재 이 사람이 몇 번째인지 계산 (삭제된 행 제외)
+      // 실시간으로 현재 이 사람이 몇 번째인지 계산하되, 사용자에게는 순번을 노출하지 않음
       let currentOrder = currentMonthDataIndices.length;
-      let currentStatusText = currentOrder <= 30 ? currentOrder + "번째" : "예비 " + (currentOrder - 30) + "번";
+      let currentUserStatusLabel = getUserStatusLabel(currentOrder);
+      let currentUserGuideText = getUserGuideText(currentOrder);
 
       // 중복 체크 (결과를 바로 리턴하지 않고 변수에 담아둠)
       if (savedTel === inputTel && !duplicateResult) {
@@ -70,9 +95,9 @@ function doPost(e) {
           duplicateResult = {
             result: "fail", 
             message: `[신청 확인]\n${savedName}님, 이미 ${eventMonth}월 이벤트 신청이 완료되었습니다.\n\n` +
-                     // ✅ 여기서 업데이트된 순번을 보여줌
-                     `• 순번: ${currentStatusText}\n` + 
+                     `• 접수 상태: ${currentUserStatusLabel}\n` + 
                      `• 사연: [ ${savedContent} ]\n\n` +
+                     `${currentUserGuideText}\n\n` +
                      `※ 본인 확인이 완료되어 상세 정보를 표시합니다.`
           };
         } else {
@@ -118,7 +143,9 @@ function doPost(e) {
       const dateStr = Utilities.formatDate(date, "GMT+9", "yyyy-MM-dd");
       if (dayOfWeek === 0 || dayOfWeek === 6 || holidays.indexOf(dateStr) !== -1) {
         date.setDate(date.getDate() + 1);
-      } else { break; }
+      } else { 
+        break; 
+      }
     }
     return date;
   };
@@ -135,6 +162,7 @@ function doPost(e) {
       message: `현재는 신청 기간이 아닙니다.\n이번 달은 ${m}월 ${d}일 09:00부터 신청 가능합니다.`
     })).setMimeType(ContentService.MimeType.JSON);
   }
+
   if (now > endDay) {
     return ContentService.createTextOutput(JSON.stringify({
       result: "fail",
@@ -153,6 +181,9 @@ function doPost(e) {
   // ✅ 5. 신규 신청자 기록
   const nextNum = currentMonthDataIndices.length + 1; 
   const statusText = nextNum <= 30 ? nextNum + "번째" : "예비 " + (nextNum - 30) + "번";
+  const userStatusLabel = getUserStatusLabel(nextNum);
+  const userGuideText = getUserGuideText(nextNum);
+  const userResultMessage = getUserResultMessage(nextNum);
   
   // 4. 데이터 기록
   sheet.appendRow([
@@ -179,7 +210,9 @@ function doPost(e) {
     };
 
     // 1. 관리자 알림용 세팅
-    const adminEmails = "mono@monobloc.co.kr, yellow@monobloc.co.kr, spilky67@monobloc.co.kr, aiden@monobloc.co.kr, kimbs0712@junggu.seoul.kr";
+    // ✅ 담당자 메일에는 내부 관리용 순번을 그대로 표시
+    // const adminEmails = "mono@monobloc.co.kr, yellow@monobloc.co.kr, spilky67@monobloc.co.kr, aiden@monobloc.co.kr, kimbs0712@junggu.seoul.kr";
+    const adminEmails = "aiden@monobloc.co.kr";
     const adminSubject = `[신규 신청] ${eventMonth}월 이벤트 신청 접수 (${inputName}님)`;
     const adminBody = `새로운 이벤트 신청이 접수되었습니다.\n\n` +
                       `• 성함: ${inputName}\n` +
@@ -191,15 +224,15 @@ function doPost(e) {
                       `https://docs.google.com/spreadsheets/d/190gYbqNm3-nEEYrmWKBJ0w-njifasrKRZhUt541dSOY/edit?usp=sharing`;
     
     // 2. 신청자 확인용 세팅 (자동 답장)
-    const userSubject = `[스마트 쉼터] ${inputName}님의  ${eventMonth}월의 소중한 사연이 정상적으로 접수되었습니다.`;
+    // ✅ 신청자 메일에는 순번을 표시하지 않고 대상자/예비만 표시
+    const userSubject = `[스마트 쉼터] ${inputName}님의 ${eventMonth}월 사연이 정상적으로 접수되었습니다.`;
     const userBody = `안녕하세요, ${inputName}님!\n\n` +
                      `우리 동네 스마트 쉼터의 ‘광고 이벤트’에 사연을 보내주셔서 진심으로 감사합니다.\n\n` +
                      `[접수 내용 확인]\n` +
                      `• 신청 월: ${eventMonth}월\n` +
-                     `• 신청 순번: ${statusText}\n` +
+                     `• 접수 상태: ${userStatusLabel}\n` +
                      `• 작성 사연: [ ${inputContent} ]\n\n` +
-                     `선정된 사연은 화면에 게시될 디자인 작업 논의 및 안내를 위해 추후 개별적으로 연락 드릴 예정입니다.\n` +
-                     `기분 좋은 소식으로 다시 연락드리겠습니다.\n\n` +
+                     `${userGuideText}\n\n` +
                      `※ 본 메일은 발신 전용으로 회신이 되지 않습니다.\n` +
                      `감사합니다.\n${senderName} 드림`;
 
@@ -215,6 +248,6 @@ function doPost(e) {
   
   return ContentService.createTextOutput(JSON.stringify({
     result: "success", 
-    message: `${eventMonth}월에 게시될 이벤트에 ${statusText}로 신청되었습니다!`
+    message: userResultMessage
   })).setMimeType(ContentService.MimeType.JSON);
 }
