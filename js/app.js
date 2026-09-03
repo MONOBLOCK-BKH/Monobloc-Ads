@@ -71,7 +71,7 @@
       applicationTitle.innerText = `${eventM}월 선착순 신청하기`;
     }
     if (periodText) {
-      periodText.innerHTML = `이번 달 신청은 ${eventM}월 게시 이벤트 신청입니다.<br>${m}월 ${d}일 09:00부터 ${endM}월 ${endD}일 23:59:59까지 신청 가능합니다.<br>(선착순 대상자 30명, 이후 예비 접수)`;
+      periodText.innerHTML = `이번 달 신청은 ${eventM}월 게시 이벤트 신청입니다.<br>${m}월 ${d}일 09:00부터 ${endM}월 ${endD}일 23:59:59까지<br>신청 가능합니다.<br>(선착순 대상자 30명, 이후 예비 접수)`;
     }
 
     // 2. 이미지 레이아웃 및 클릭 타겟 설정
